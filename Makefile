@@ -3,11 +3,12 @@
 .SUFFIXES:
 
 root-objects := .init.sh .neovim.sh .nodejs.sh .other.sh
-user-objects := .global-npm-setup.sh .global-npm-packages.sh
+user-objects := .global-npm-setup.sh .global-npm-packages.sh .dotfiles.sh .python-pip.sh
 
 root : $(root-objects)
 user : $(user-objects)
 .PHONY : root user clean
+
 
 .init.sh : init.sh
 	./$<;
@@ -25,6 +26,17 @@ user : $(user-objects)
 	./$<;
 	@touch $@;
 
+
+## installed without root privilege
+
+.dotfiles.sh : dotfiles.sh .init.sh
+	./$<;
+	@touch $@;
+
+.python-pip.sh : python-pip.sh .dotfiles.sh
+	./$<;
+	@touch $@;
+
 .global-npm-setup.sh : global-npm-setup.sh .nodejs.sh
 	./$<;
 	@touch $@;
@@ -32,3 +44,10 @@ user : $(user-objects)
 .global-npm-packages.sh : global-npm-packages.sh .global-npm-setup.sh
 	./$<;
 	@touch $@;
+
+.python-packages.sh : python-packages.sh .python-pip.sh
+	./$<;
+	@touch $@;
+
+clean :
+	rm $(root-objects) $(user-objects);

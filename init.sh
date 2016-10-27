@@ -14,3 +14,12 @@ apt-get install software-properties-common
 
 # Install support for compiling
 apt-get --yes install build-essential cmake;
+
+# install support for Pillow
+apt-get --yes install libtiff4-dev libjpeg8-dev zlib1g-dev \
+      libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk
+
+
+# Install more stuff for web development
+apt-get --yes install sqlite3 python-sqlite
+apt-get --yes install optipng
