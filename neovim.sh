@@ -19,3 +19,8 @@ update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
 update-alternatives --config vim
 update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 update-alternatives --config editor
+
+
+# Install vim-plug
+mkdir -p .config/nvim/autoload
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

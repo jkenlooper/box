@@ -2,7 +2,7 @@
 # clear out any suffixes
 .SUFFIXES:
 
-root-objects := .init.sh .neovim.sh .nodejs.sh .other.sh
+root-objects := .init.sh .neovim.sh .nodejs.sh .other.sh .tmux.sh
 user-objects := .global-npm-setup.sh .global-npm-packages.sh .dotfiles.sh .python-pip.sh
 
 root : $(root-objects)
@@ -15,6 +15,10 @@ user : $(user-objects)
 	@touch $@;
 
 .neovim.sh : neovim.sh .init.sh
+	./$<;
+	@touch $@;
+
+.tmux.sh : .init.sh
 	./$<;
 	@touch $@;
 

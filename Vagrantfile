@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -71,6 +71,7 @@ Vagrant.configure(2) do |config|
   # SHELL
 
   #config.vm.provision "shell", path: "./init.sh", args: []
+  config.vm.provision "shell", inline: "apt-get --yes install make"
   config.vm.provision "shell", path: "./make.sh", args: ["root"]
   config.vm.provision "shell", path: "./make.sh", args: ["user"], privileged: false
   #config.vm.provision "shell", inline: "make", args: ["root"]
