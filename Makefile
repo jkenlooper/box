@@ -18,7 +18,7 @@ user : $(user-objects)
 	./$<;
 	@touch $@;
 
-.tmux.sh : .init.sh
+.tmux.sh : tmux.sh .init.sh
 	./$<;
 	@touch $@;
 
