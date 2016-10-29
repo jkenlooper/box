@@ -3,7 +3,7 @@
 .SUFFIXES:
 
 root-objects := .init.sh .neovim.sh .nodejs.sh .other.sh .tmux.sh
-user-objects := .global-npm-setup.sh .global-npm-packages.sh .dotfiles.sh .python-pip.sh
+user-objects := .global-npm-setup.sh .global-npm-packages.sh .dotfiles.sh .python-pip.sh .todotxt.sh
 
 root : $(root-objects)
 user : $(user-objects)
@@ -34,6 +34,10 @@ user : $(user-objects)
 ## installed without root privilege
 
 .dotfiles.sh : dotfiles.sh .init.sh
+	./$<;
+	@touch $@;
+
+.todotxt.sh : todotxt.sh .dotfiles.sh
 	./$<;
 	@touch $@;
 
