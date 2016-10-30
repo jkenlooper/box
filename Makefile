@@ -2,8 +2,8 @@
 # clear out any suffixes
 .SUFFIXES:
 
-root-objects := .init.sh .neovim.sh .nodejs.sh .other.sh .tmux.sh
-user-objects := .global-npm-setup.sh .global-npm-packages.sh .dotfiles.sh .python-pip.sh .todotxt.sh
+root-objects := .init.sh .neovim.sh .nodejs.sh .other.sh .tmux.sh .python-pip.sh .python-packages.sh
+user-objects := .dotfiles.sh
 
 root : $(root-objects)
 user : $(user-objects)
@@ -30,6 +30,13 @@ user : $(user-objects)
 	./$<;
 	@touch $@;
 
+.python-pip.sh : python-pip.sh .init.sh
+	./$<;
+	@touch $@;
+
+.python-packages.sh : python-packages.sh .python-pip.sh
+	./$<;
+	@touch $@;
 
 ## installed without root privilege
 
@@ -37,25 +44,6 @@ user : $(user-objects)
 	./$<;
 	@touch $@;
 
-.todotxt.sh : todotxt.sh .dotfiles.sh
-	./$<;
-	@touch $@;
-
-.python-pip.sh : python-pip.sh .dotfiles.sh
-	./$<;
-	@touch $@;
-
-.global-npm-setup.sh : global-npm-setup.sh .nodejs.sh
-	./$<;
-	@touch $@;
-
-.global-npm-packages.sh : global-npm-packages.sh .global-npm-setup.sh
-	./$<;
-	@touch $@;
-
-.python-packages.sh : python-packages.sh .python-pip.sh
-	./$<;
-	@touch $@;
 
 clean :
 	rm $(root-objects) $(user-objects);

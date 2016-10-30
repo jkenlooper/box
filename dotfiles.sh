@@ -7,4 +7,5 @@ if test ! -d dotfiles; then
 fi
 cd dotfiles;
 git pull;
-make;
+
+echo "cd to /vagrant/dotfiles/ and run make"
