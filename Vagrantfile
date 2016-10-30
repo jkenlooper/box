@@ -40,6 +40,7 @@ Vagrant.configure(2) do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.synced_folder "~/projects", "/mnt/projects"
   config.vm.synced_folder "~/boxdrop", "/mnt/boxdrop"
+  config.vm.synced_folder "~/boxstash", "/mnt/boxstash"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

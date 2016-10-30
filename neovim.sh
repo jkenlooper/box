@@ -22,5 +22,5 @@ update-alternatives --config editor
 
 
 # Install vim-plug
-mkdir -p .config/nvim/autoload
-curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo $XDG_CONFIG_HOME/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/releases/download/0.9.1/plug.vim
+
