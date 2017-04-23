@@ -3,10 +3,15 @@
 apt-get --yes update
 apt-get --yes upgrade
 
+apt-get --yes install ntpdate
+ntpdate ntp.ubuntu.com
+
 apt-get --yes install git curl
 # Use latest patched tmux with true color support
 apt-get --yes install tmux
 
+# Install python2 and python3 with pip
+apt-get --yes install python
 apt-get --yes install python-virtualenv
 apt-get --yes install python-dev python-pip python3-dev python3-pip
 
