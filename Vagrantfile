@@ -30,6 +30,7 @@ Vagrant.configure(2) do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   # config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", type: "dhcp"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -44,6 +45,30 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "~/projects", "/mnt/projects"
   config.vm.synced_folder "~/boxdrop", "/mnt/boxdrop"
   config.vm.synced_folder "~/boxstash", "/mnt/boxstash"
+
+  # https://www.wildcardcorp.com/blog/making-vagrant-virtualbox-nfs-less-painful-with-sparse-disk-images
+  # Only on `vagrant up` commands
+  if ARGV[0] == "up" then
+      # just convenience for not retyping long paths
+      workspacepath = "./workspace"
+
+      # Check to make sure the disk image exists (and create it if it doesn't)
+      if not File.exists?("workspace.dmg.sparseimage")
+          system 'hdiutil create "workspace.dmg.sparseimage" -type SPARSE -fs "Case-sensitive Journaled HFS+" -size 10g -volname "Workspace"'
+      end
+
+      # Mount the image, if it isn't mounted already
+      system 'hdiutil attach "workspace.dmg.sparseimage"'
+
+      # Create a symlink to the volume in the working directory of the Vagrantfile
+      system 'ln -s "/Volumes/Workspace" "'+workspacepath+'"' unless File.exists?(workspacepath)
+
+      # Mount the volume into the guest with NFS
+      config.vm.synced_folder workspacepath, "/mnt/workspace", nfs: true
+
+      # Disable the default /vagrant share (no need for it with the NFS share)
+      #config.vm.synced_folder ".", "/vagrant", disabled: true
+  end
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
