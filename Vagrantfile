@@ -17,6 +17,13 @@ Vagrant.configure(2) do |config|
 
   config.vm.hostname = "box"
 
+
+  # SSH Agent Forwarding
+  #
+  # Enable agent forwarding on vagrant ssh commands. This allows you to use ssh keys
+  # on your host machine inside the guest. See the manual for `ssh-add`.
+  # config.ssh.forward_agent = true
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
