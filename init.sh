@@ -1,5 +1,22 @@
 #!/bin/bash
 
+adduser jake
+usermod -aG sudo jake
+
+read -n 1 -p "Copy the id_rsa.pub key to the remote ... press any key to continue";
+
+su - jake
+mkdir .ssh
+chmod 700 .ssh
+echo "paste in the key"
+vi .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+exit
+
+echo "Enable firewall"
+ufw allow OpenSSH
+ufw enable
+
 apt-get --yes update
 apt-get --yes upgrade
 
