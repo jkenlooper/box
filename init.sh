@@ -1,22 +1,24 @@
 #!/bin/bash
 
-adduser jake
-usermod -aG sudo jake
+echo "Create a user login for the box"
+read -p "adduser [] " INIT_USER
+adduser $INIT_USER
+echo "Setting $INIT_USER to sudo group"
+usermod -aG sudo $INIT_USER
 
-read -n 1 -p "Copy the id_rsa.pub key to the remote ... press any key to continue";
+read -n 1 -p "Copy the id_rsa.pub key for the remote ... press any key to continue";
 
-su - jake
-mkdir .ssh
-chmod 700 .ssh
-echo "paste in the key"
-vi .ssh/authorized_keys
-chmod 600 .ssh/authorized_keys
-exit
+mkdir -p /home/$INIT_USER/.ssh
+chmod 700 /home/$INIT_USER/.ssh
+read -p "paste in the key to append to .ssh/authorized_keys: " PUB_KEY
+echo $PUB_KEY >> /home/$INIT_USER/.ssh/authorized_keys
+chmod 600 /home/$INIT_USER/.ssh/authorized_keys
 
 echo "Enable firewall"
 ufw allow OpenSSH
 ufw enable
 
+echo "install and upgrade the things"
 apt-get --yes update
 apt-get --yes upgrade
 

@@ -2,7 +2,7 @@
 # clear out any suffixes
 .SUFFIXES:
 
-root-objects := .init.sh .neovim.sh .nodejs.sh .other.sh .tmux.sh .python-pip.sh .python-packages.sh
+root-objects := .init.sh .vim.sh .nodejs.sh .other.sh .tmux.sh .python-pip.sh .python-packages.sh
 user-objects := .dotfiles.sh
 
 root : $(root-objects)
@@ -14,7 +14,7 @@ user : $(user-objects)
 	./$<;
 	@touch $@;
 
-.neovim.sh : neovim.sh .init.sh
+.vim.sh : vim.sh .init.sh
 	./$<;
 	@touch $@;
 
@@ -44,6 +44,8 @@ user : $(user-objects)
 	./$<;
 	@touch $@;
 
+test :
+	./test.sh;
 
 clean :
 	rm $(root-objects) $(user-objects);
