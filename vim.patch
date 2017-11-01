@@ -1,0 +1,42 @@
+diff --git a/src/Makefile b/src/Makefile
+index 0b95c6e..e4c9c3c 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -331,7 +331,7 @@ CClink = $(CC)
+ # Uncomment this line when you don't want to get the GUI version, although you
+ # have GTK, Motif and/or Athena.  Also use --without-x if you don't want X11
+ # at all.
+-#CONF_OPT_GUI = --disable-gui
++CONF_OPT_GUI = --disable-gui --without-x
+ 
+ # Uncomment one of these lines if you have that GUI but don't want to use it.
+ # The automatic check will use another one that can be found.
+@@ -445,9 +445,9 @@ CClink = $(CC)
+ # dlopen(), dlsym(), dlclose(), i.e. pythonX.Y.so must be available
+ # However, this may still cause problems, such as "import termios" failing.
+ # Build two separate versions of Vim in that case.
+-#CONF_OPT_PYTHON = --enable-pythoninterp
++CONF_OPT_PYTHON = --enable-pythoninterp
+ #CONF_OPT_PYTHON = --enable-pythoninterp=dynamic
+-#CONF_OPT_PYTHON3 = --enable-python3interp
++CONF_OPT_PYTHON3 = --enable-python3interp
+ #CONF_OPT_PYTHON3 = --enable-python3interp=dynamic
+ 
+ # RUBY
+@@ -539,14 +539,14 @@ CClink = $(CC)
+ #CONF_OPT_FEAT = --with-features=huge
+ 
+ # COMPILED BY - For including a specific e-mail address for ":version".
+-#CONF_OPT_COMPBY = "--with-compiledby=John Doe <JohnDoe@yahoo.com>"
++CONF_OPT_COMPBY = "--with-compiledby=Jake Hickenlooper <jake@weboftomorrow.com>"
+ 
+ # X WINDOWS DISABLE - For creating a plain Vim without any X11 related fancies
+ # (otherwise Vim configure will try to include xterm titlebar access)
+ # Also disable the GUI above, otherwise it will be included anyway.
+ # When both GUI and X11 have been disabled this may save about 15% of the
+ # code and make Vim startup quicker.
+-#CONF_OPT_X = --without-x
++CONF_OPT_X = --without-x
+ 
+ # X WINDOWS DIRECTORY - specify X directories
+ # If configure can't find you X stuff, or if you have multiple X11 derivatives

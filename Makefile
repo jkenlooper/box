@@ -2,8 +2,8 @@
 # clear out any suffixes
 .SUFFIXES:
 
-root-objects := .init.sh .vim.sh .nodejs.sh .other.sh .tmux.sh .python-pip.sh .python-packages.sh
-user-objects := .dotfiles.sh
+root-objects := .init.sh .nodejs.sh .other.sh .tmux.sh .python-pip.sh .python-packages.sh
+user-objects := .vim.sh .dotfiles.sh
 
 root : $(root-objects)
 user : $(user-objects)
@@ -11,10 +11,6 @@ user : $(user-objects)
 
 
 .init.sh : init.sh
-	./$<;
-	@touch $@;
-
-.vim.sh : vim.sh .init.sh
 	./$<;
 	@touch $@;
 
@@ -40,12 +36,13 @@ user : $(user-objects)
 
 ## installed without root privilege
 
-.dotfiles.sh : dotfiles.sh .init.sh
+.vim.sh : vim.sh .init.sh
 	./$<;
 	@touch $@;
 
-test :
-	./test.sh;
+.dotfiles.sh : dotfiles.sh .init.sh
+	./$<;
+	@touch $@;
 
 clean :
 	rm $(root-objects) $(user-objects);

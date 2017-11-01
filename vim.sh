@@ -1,6 +1,16 @@
 #!/bin/bash
 
-echo "installing vim 8"
-sudo add-apt-repository ppa:jonathonf/vim
-sudo apt update
-sudo apt install vim
+echo "compiling vim 8"
+
+# checkout the vim repo
+mkdir -p $HOME/sources
+git clone https://github.com/vim/vim $HOME/sources/vim
+
+# apply a patch to configure the build
+cp vim.patch $HOME/sources/vim/
+cd $HOME/sources/vim/
+git apply vim.patch
+
+# compile and install
+make
+sudo make install
