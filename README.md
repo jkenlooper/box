@@ -14,6 +14,8 @@ Portable, reliable, reproducable
 
 On the host machine configure SSH agent forwarding to the remote box.
 
+If using mac terminal; use the box-input.terminal profile.  Font used is from http://input.fontbureau.com/
+
 On the remote box
 
 ```
