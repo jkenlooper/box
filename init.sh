@@ -16,6 +16,9 @@ chmod 600 /home/$INIT_USER/.ssh/authorized_keys
 
 echo "Enable firewall"
 ufw allow OpenSSH
+ufw allow 80/tcp
+#ufw allow 443/tcp
+ufw show added
 ufw enable
 
 echo "install and upgrade the things"
