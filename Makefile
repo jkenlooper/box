@@ -2,13 +2,17 @@
 # clear out any suffixes
 .SUFFIXES:
 
-root-objects := .init.sh .nodejs.sh .other.sh .tmux.sh .python-pip.sh .python-packages.sh
+root-objects := .init-apt-get.sh .init.sh .nodejs.sh .tmux.sh .python-pip.sh .python-packages.sh
 user-objects := .vim.sh .dotfiles.sh
 
 root : $(root-objects)
 user : $(user-objects)
 .PHONY : root user clean
 
+
+.init-apt-get.sh : init-apt-get.sh
+	./$<;
+	@touch $@;
 
 .init.sh : init.sh
 	./$<;
@@ -19,10 +23,6 @@ user : $(user-objects)
 	@touch $@;
 
 .nodejs.sh : nodejs.sh .init.sh
-	./$<;
-	@touch $@;
-
-.other.sh : other.sh .init.sh
 	./$<;
 	@touch $@;
 
