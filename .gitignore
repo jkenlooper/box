@@ -2,3 +2,4 @@
 /.vagrant
 /dotfiles
 /*console.log
+id_rsa.pub
