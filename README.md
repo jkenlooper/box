@@ -32,11 +32,19 @@ say -v Fred "You broke it! It worked on my machine."
 Now that the image has been built; create a container.  Use `-d` to start in
 detached mode, `--name` to set a name for the container instead of an auto
 generated one.  The port 8022 will be set on the host machine to map to port 22
-on the box.  Set a volume to share a directory (projects) on the host machine.
+on the box.  Set a volume to share a directory (projects) on the host machine.  
+
+Since this is a development box it is useful to be able to use docker inside of
+the container to create and manage sibling containers.  That is why the
+bind-mounting of `/var/run/docker.sock` is being set.  See solution in [Using
+Docker-in-Docker for your CI or testing environment? Think
+twice.](https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/)
+blog post.
+
 This is just the way I like to run the docker container; adjust as needed.
 
 ```
-docker run -d --name box-1 -p 8022:22 -v $HOME/projects/:/home/jake/projects box:latest
+docker run -d --name box-1 -p 8022:22 -v $HOME/projects/:/home/jake/projects -v /var/run/docker.sock:/var/run/docker.sock box:latest
 ```
 
 SSH in with the port of 8022 as user.

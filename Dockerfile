@@ -13,6 +13,7 @@ ENV LC_ALL en_US.UTF-8
 
 # Inspired by https://docs.docker.com/engine/examples/running_ssh_service/
 RUN apt-get update && apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
 
 # Run the initial scripts as root
 ADD init-apt-get.sh /var/box/
@@ -49,6 +50,19 @@ RUN ./python-pip.sh
 ADD python-packages.sh /var/box/
 RUN ./python-packages.sh
 
+# Docker
+RUN apt-get update && apt-get --yes install apt-transport-https ca-certificates gnupg2 software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add -
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+   $(lsb_release -cs) \
+   stable"
+
+RUN apt-get update && apt-get --yes install docker-ce
+
+# add user to docker group
+RUN gpasswd -a jake docker
+
 # Run the other scripts as the user
 USER jake
 WORKDIR /home/jake/
@@ -63,4 +77,3 @@ VOLUME /home/jake/projects
 USER root
 
 CMD ["/usr/sbin/sshd", "-D"]
-
