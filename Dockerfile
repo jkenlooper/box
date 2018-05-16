@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 
 # Run the initial scripts as root
-ADD init-apt-get.sh /var/box/
+COPY init-apt-get.sh /var/box/
 WORKDIR /var/box/
 
 RUN ./init-apt-get.sh
@@ -24,7 +24,7 @@ RUN ./init-apt-get.sh
 # Create user login
 RUN adduser --disabled-password jake
 RUN usermod -aG sudo jake
-ADD id_rsa.pub /home/jake/.ssh/authorized_keys
+COPY id_rsa.pub /home/jake/.ssh/authorized_keys
 RUN chown jake:jake /home/jake/.ssh
 RUN chmod 700 /home/jake/.ssh
 RUN chown jake:jake /home/jake/.ssh/authorized_keys
@@ -32,48 +32,36 @@ RUN chmod 600 /home/jake/.ssh/authorized_keys
 RUN echo 'jake:isgreat' | chpasswd
 
 # install vim
-ADD vim.sh vim.patch /var/box/
+COPY vim.sh vim.patch /var/box/
 RUN ./vim.sh
 
 # install tmux
-ADD tmux.sh /var/box/
+COPY tmux.sh /var/box/
 RUN ./tmux.sh
 
 # install nodejs (npm)
-ADD nodejs.sh /var/box/
+COPY nodejs.sh /var/box/
 RUN ./nodejs.sh
 
 # Python
-ADD python-pip.sh /var/box/
+COPY python-pip.sh /var/box/
 RUN ./python-pip.sh
 
-ADD python-packages.sh /var/box/
+COPY python-packages.sh /var/box/
 RUN ./python-packages.sh
 
 # Docker
-RUN apt-get update && apt-get --yes install apt-transport-https ca-certificates gnupg2 software-properties-common
-RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add -
-RUN add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
-   $(lsb_release -cs) \
-   stable"
-
-RUN apt-get update && apt-get --yes install docker-ce
-
-# add user to docker group
-RUN gpasswd -a jake docker
-
-# Run the other scripts as the user
-USER jake
-WORKDIR /home/jake/
-RUN git clone https://github.com/jkenlooper/dotfiles.git
-# RUN cd dotfiles && make
-
-EXPOSE 22
-
-# create the mount point
-VOLUME /home/jake/projects
-
-USER root
+## Skipping docker in docker for now
+#RUN apt-get update && apt-get --yes install apt-transport-https ca-certificates gnupg2 software-properties-common
+#RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add -
+#RUN add-apt-repository \
+#   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+#   $(lsb_release -cs) \
+#   stable"
+#
+#RUN apt-get update && apt-get --yes install docker-ce
+#
+## add user to docker group
+#RUN gpasswd -a jake docker
 
 CMD ["/usr/sbin/sshd", "-D"]

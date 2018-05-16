@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  ssh:
+    ports:
+      - "8022:22"
+    build: ./
+    volumes:
+      # The home directory for the user will be a volume.
+      - type: volume
+        source: home
+        target: /home/jake
+
+      # Bind mount these directories to share with the host machine.
+      - type: bind
+        source: $HOME/projects
+        target: /mnt/projects
+      - type: bind
+        source: $HOME/Dropbox
+        target: /mnt/Dropbox
+
+volumes:
+  home:
+
+
+

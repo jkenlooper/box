@@ -24,9 +24,7 @@ If using mac terminal; use the box-input.terminal profile.  Font used is from ht
 * Say something cheesy because this is going to take a while at first.
 
 ```
-docker build -t box . && \
-say -v Fred "$USER, your box is ready.  Try not to break it this time, mmm k?" || \
-say -v Fred "You broke it! It worked on my machine."
+docker build -t box .
 ```
 
 Now that the image has been built; create a container.  Use `-d` to start in
